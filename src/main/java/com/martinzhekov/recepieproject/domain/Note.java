@@ -33,7 +33,6 @@ public class Note {
         this.recipe = recipe;
     }
 
-    @Column(name = "recipe_notes")
     @Lob
     public String getRecipeNotes() {
         return recipeNotes;

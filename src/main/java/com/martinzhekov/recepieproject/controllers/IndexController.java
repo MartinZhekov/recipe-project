@@ -1,6 +1,8 @@
 package com.martinzhekov.recepieproject.controllers;
 
+import com.martinzhekov.recepieproject.services.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -10,9 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
+    private final RecipeService recipeService;
+
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
+
     @RequestMapping({"", "/", "/index"})
-    public String getIndexPage(){
-        System.out.println("Save message to say... 1234588");
+    public String getIndexPage(Model model){
+        model.addAttribute("recipes", recipeService.getRecipes());
+
         return "index";
     }
 }

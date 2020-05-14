@@ -1,6 +1,7 @@
 package com.martinzhekov.recepieproject.domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,8 +22,8 @@ public class Recipe {
     private Difficulty difficulty;
     private Byte[] image;
     private Note notes;
-    private Set<Ingredient> ingredients;
-    private Set<Category> categories;
+    private Set<Ingredient> ingredients = new HashSet<>();
+    private Set<Category> categories = new HashSet<>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +43,6 @@ public class Recipe {
         this.description = description;
     }
 
-    @Column(name = "prep_time")
     public Integer getPrepTime() {
         return prepTime;
     }
@@ -51,7 +51,6 @@ public class Recipe {
         this.prepTime = prepTime;
     }
 
-    @Column(name = "cook_time")
     public Integer getCookTime() {
         return cookTime;
     }
@@ -93,6 +92,7 @@ public class Recipe {
         this.difficulty = difficulty;
     }
 
+    @Lob
     public String getDirections() {
         return directions;
     }
@@ -117,6 +117,7 @@ public class Recipe {
 
     public void setNotes(Note note) {
         this.notes = note;
+        notes.setRecipe(this);
     }
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
@@ -126,6 +127,12 @@ public class Recipe {
 
     public void setIngredients(Set<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Recipe addIngredient(Ingredient ingredient){
+        ingredient.setRecipe(this);
+        this.ingredients.add(ingredient);
+        return this;
     }
 
     @ManyToMany
