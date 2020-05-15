@@ -1,5 +1,7 @@
 package com.martinzhekov.recepieproject.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 /**
@@ -7,38 +9,17 @@ import javax.persistence.*;
  */
 
 
+@Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity(name = "notes")
 public class Note {
 
-    private Long id;
-    private Recipe recipe;
-    private String recipeNotes;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+    private Long id;
     @OneToOne
-    public Recipe getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
+    private Recipe recipe;
     @Lob
-    public String getRecipeNotes() {
-        return recipeNotes;
-    }
+    private String recipeNotes;
 
-    public void setRecipeNotes(String recipeNotes) {
-        this.recipeNotes = recipeNotes;
-    }
 }
