@@ -1,1 +1,1 @@
-# recepie-project
+# recipe-project
