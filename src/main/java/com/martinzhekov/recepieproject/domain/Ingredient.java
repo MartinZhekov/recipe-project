@@ -1,6 +1,7 @@
 package com.martinzhekov.recepieproject.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -8,7 +9,6 @@ import java.math.BigDecimal;
 /**
  * Created by martinzhekov on 14.05.20
  */
-
 
 @Data
 @EqualsAndHashCode(exclude = {"recipe"})
