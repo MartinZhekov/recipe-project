@@ -1,6 +1,7 @@
 package com.martinzhekov.recepieproject.domain;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,8 @@ import javax.persistence.Id;
  */
 
 
-@Data
+@Getter
+@Setter
 @Entity(name = "units_of_measure")
 public class UnitOfMeasure {
 
@@ -20,4 +22,10 @@ public class UnitOfMeasure {
     private Long id;
     private String description;
 
+    public UnitOfMeasure() {
+    }
+
+    public UnitOfMeasure(String description) {
+        this.description = description;
+    }
 }

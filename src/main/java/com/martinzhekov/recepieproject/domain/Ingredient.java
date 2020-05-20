@@ -1,7 +1,8 @@
 package com.martinzhekov.recepieproject.domain;
 
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +11,8 @@ import java.math.BigDecimal;
  * Created by martinzhekov on 14.05.20
  */
 
-@Data
+@Getter
+@Setter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity(name = "ingredients")
 public class Ingredient {
@@ -33,7 +35,6 @@ public class Ingredient {
         this.amount = amount;
         this.uom = uom;
     }
-
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom, Recipe recipe) {
         this.description = description;
         this.amount = amount;
