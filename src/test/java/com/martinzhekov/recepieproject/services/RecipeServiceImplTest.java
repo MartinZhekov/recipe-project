@@ -1,8 +1,10 @@
 package com.martinzhekov.recepieproject.services;
 
+import com.martinzhekov.recepieproject.commands.RecipeCommand;
 import com.martinzhekov.recepieproject.converters.RecipeCommandToRecipe;
 import com.martinzhekov.recepieproject.converters.RecipeToRecipeCommand;
 import com.martinzhekov.recepieproject.domain.Recipe;
+import com.martinzhekov.recepieproject.exceptions.NotFoundException;
 import com.martinzhekov.recepieproject.repositories.RecipeRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +32,38 @@ public class RecipeServiceImplTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
+    }
+
+
+    @Test(expected = NotFoundException.class)
+    public void getRecipeByIdTestNotFound() throws Exception{
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe recipeReturned = recipeService.findById(1L);
+    }
+
+
+    @Test
+    public void getRecipeCommandByIdTest(){
+        Recipe recipe = new Recipe();
+        recipe.setId(1L);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        RecipeCommand recipeCommand = new RecipeCommand();
+        recipeCommand.setId(1L);
+
+        when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+        RecipeCommand commandById = recipeService.findCommandById(1L);
+
+        assertNotNull("Null recipe returned", commandById);
+        verify(recipeRepository,times(1)).findById(anyLong());
+        verify(recipeRepository,never()).findAll();
     }
 
     @Test
